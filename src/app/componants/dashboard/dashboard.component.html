@@ -1,0 +1,258 @@
+<style>
+    @media screen and (max-width: 767px) {
+        .card-container>*:not(.circle-link),
+        .terminal {
+            width: 100%;
+        }
+        .card:not(.highlight-card) {
+            height: 16px;
+            margin: 8px 0;
+        }
+        .card.highlight-card span {
+            margin-left: 72px;
+        }
+        svg#rocket-smoke {
+            right: 120px;
+            transform: rotate(-5deg);
+        }
+    }
+    
+    @media screen and (max-width: 575px) {
+        svg#rocket-smoke {
+            display: none;
+            visibility: hidden;
+        }
+    }
+    
+    svg#clouds {
+        position: fixed;
+        bottom: -160px;
+        left: -230px;
+        z-index: -10;
+        width: 1920px;
+    }
+    
+    svg#rocket-smoke {
+        height: calc(100vh - 95px);
+        position: absolute;
+        top: 10px;
+        right: 180px;
+        z-index: -10;
+    }
+    
+    svg#rocket {
+        width: 80px;
+        position: absolute;
+        left: -10px;
+        top: -24px;
+    }
+</style>
+
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Employee Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addEmployee" type="submit">Add Employee</button>
+
+        </div>
+
+    </nav>
+    <table class="table">
+        <thead>
+            <tr>
+                <!-- <th scope="col">EmployeeId</th> -->
+                <th scope="col">EmployeeName</th>
+                <th scope="col">Email</th>
+                <th scope="col">PhoneNo</th>
+                <th scope="col">Age</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Address</th>
+                <th scope="col">PinCode</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr scope="row" *ngFor="let Employee of empList;">
+                <!-- <td>{{Employee.id}}</td> -->
+                <td>{{Employee.name}}</td>
+                <td>{{Employee.email}}</td>
+                <td>{{Employee.phoneNo}}</td>
+                <td>{{Employee.age}}</td>
+                <td>{{Employee.gender}}</td>
+                <td>{{Employee.designation}}</td>
+                <td>{{Employee.address}}</td>
+                <td>{{Employee.pinCode}}</td>
+                <td>
+
+                    <button type="submit" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editEmployee" (click)="editEmployee(Employee)">Edit</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteEmployee(Employee.id,Employee)"> Delete</button>
+                </td>
+            </tr>
+
+
+        </tbody>
+
+    </table>
+    <!-- add Employee -->
+    <div class="modal fade" id="addEmployee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form [formGroup]="empDetail">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Employee Detail
+                        </h1>
+                        <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="mb-2">
+                            <label for="exampleInputEmployee" class="form-label">Employee Name</label>
+                            <!-- <div *ngIf="name.invalid && (name.touched || name.dirty)" class="float-right">
+                                <p class="text-danger">Required</p>
+
+                            </div> -->
+                            <input type="text" formControlName="name" class="form-control" id="exampleInputEmployee">
+
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputEmail" class="form-label">Email</label>
+                            <input type="Email" formControlName="email" class="form-control" id="exampleInputEmail">
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputPhone Number" class="form-label">phoneNo</label>
+                            <input type="Number" formControlName="phoneNo" class="form-control" id="exampleInputPhone Number">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="exampleInputAge" class="form-label">Age</label>
+                            <input type="Number" formControlName="age" class="form-control" id="exampleInputAge">
+                        </div>
+                        <div>
+                            <label for="exampleInputGender" class="form-label">Gender</label>
+                            <input type="String" formControlName="gender" class="form-control" id="exampleInputGender">
+                        </div>
+                        <!-- <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">FeMale</label>
+                        </div> -->
+                        <div class="mb-2">
+                            <label for="exampleInputDesignation" class="form-label">Designation</label>
+                            <input type="Designation" formControlName="designation" class="form-control" id="exampleInputDesignation">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="exampleInputAddress" class="form-label">Address</label>
+
+                            <textarea class="form-control" formControlName="address" id="exampleInputAddress"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputPinCode" class="form-label">PinCode</label>
+                            <input type="text" formControlName="pinCode" class="form-control" id="exampleInputPinCode">
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addemployee()">Save</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <!--Edit Employee-->
+
+    <div class="modal fade" id="editEmployee" tabindex="-2" aria-labelledby="exampleModalLabel1">
+        <form [formGroup]="empDetail">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel1">Employee Detail
+                        </h1>
+                        <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="mb-2">
+                            <label for="exampleInputEmployee" class="form-label">Employee Name</label>
+                            <!-- <div *ngIf="name.invalid && (name.touched || name.dirty)" class="float-right">
+                                            <p class="text-danger">Required</p>
+            
+                                        </div> -->
+                            <input type="text" formControlName="name" class="form-control" id="exampleInputEmployee">
+
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputEmail" class="form-label">Email</label>
+                            <input type="Email" formControlName="email" class="form-control" id="exampleInputEmail">
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputPhone Number" class="form-label">phoneNo</label>
+                            <input type="Number" formControlName="phoneNo" class="form-control" id="exampleInputPhone Number">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="exampleInputAge" class="form-label">Age</label>
+                            <input type="Number" formControlName="age" class="form-control" id="exampleInputAge">
+                        </div>
+                        <div>
+                            <label for="exampleInputGender" class="form-label">Gender</label>
+                            <input type="String" formControlName="gender" class="form-control" id="exampleInputGender">
+                        </div>
+                        <!-- <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                        <label class="form-check-label" for="inlineRadio1">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <label class="form-check-label" for="inlineRadio2">FeMale</label>
+                                    </div> -->
+                        <div class="mb-2">
+                            <label for="exampleInputDesignation" class="form-label">Designation</label>
+                            <input type="Designation" formControlName="designation" class="form-control" id="exampleInputDesignation">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="exampleInputAddress" class="form-label">Address</label>
+
+                            <textarea class="form-control" formControlName="address" id="exampleInputAddress"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputPinCode" class="form-label">PinCode</label>
+                            <input type="text" formControlName="pinCode" class="form-control" id="exampleInputPinCode">
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateEmployee()">Save</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+    <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
+        <title>Gray Clouds Background</title>
+        <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
+      </svg>
